@@ -143,8 +143,8 @@ The extra folder contains a python script that I use for SMB
 [Pwntools](https://github.com/Gallopsled/pwntools) for `log.py` file
 
 # TODO
-[ ] Redesign plugins system  
-[ ] Add report fonctionnality  
-[ ] Rewrite replay_banner.py  
-[ ] Add another parser like nmap  
-[ ] Add replay in parser_and_replayer.py
+- [ ] Redesign plugins system  
+- [ ] Add report fonctionnality  
+- [ ] Rewrite replay_banner.py  
+- [ ] Add another parser like nmap  
+- [ ] Add replay in parser_and_replayer.py
