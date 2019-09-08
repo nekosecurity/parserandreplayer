@@ -147,5 +147,4 @@ The extra folder contains a python script that I use for SMB
 [ ] Add report fonctionnality  
 [ ] Rewrite replay_banner.py  
 [ ] Add another parser like nmap  
-[ ] Add replayer in parser_and_replayer.py  
 [ ] Add replay in parser_and_replayer.py
