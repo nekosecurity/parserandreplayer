@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>parser package &mdash; ParserAndReplayer 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ParserAndReplayer
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">parser package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-parser.nessus">parser.nessus module</a></li>
+<li><a class="reference internal" href="#module-parser">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ParserAndReplayer</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>parser package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/parser.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="parser-package">
+<h1>parser package<a class="headerlink" href="#parser-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-parser.nessus">
+<span id="parser-nessus-module"></span><h2>parser.nessus module<a class="headerlink" href="#module-parser.nessus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="parser.nessus.Nessus">
+<em class="property">class </em><code class="sig-prename descclassname">parser.nessus.</code><code class="sig-name descname">Nessus</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parser to perform informative extraction from .nessus files format.</p>
+<dl class="method">
+<dt id="parser.nessus.Nessus.correl_caldera">
+<code class="sig-name descname">correl_caldera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus.correl_caldera" title="Permalink to this definition">¶</a></dt>
+<dd><p>find_all_vuln_name() -&gt; set
+Compare all vulnerabilities with the internal OCD vulnerability database</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<p>A collection containing all OCD vulnerability name,
+or an empty collection if no vulnerability is found.
+:returns: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_all_cve">
+<code class="sig-name descname">find_all_cve</code><span class="sig-paren">(</span><em class="sig-param">updatedb=False</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_all_cve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search all cve contained in the.nessus file</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all cve with plugin name,
+or an empty collection if no cve is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_all_vuln_name">
+<code class="sig-name descname">find_all_vuln_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_all_vuln_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search all vulnerabilities contained in the.nessus file</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all vulnerability name,
+or an empty collection if no vulnerability is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_canvas_exploitability">
+<code class="sig-name descname">find_by_canvas_exploitability</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_canvas_exploitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports, and the canvas exploit name if available,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_core_exploitability">
+<code class="sig-name descname">find_by_core_exploitability</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_core_exploitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_cvss">
+<code class="sig-name descname">find_by_cvss</code><span class="sig-paren">(</span><em class="sig-param">&quot;5&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_cvss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for vulnerabilities with a CVSS score equal or higher.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_ip">
+<code class="sig-name descname">find_by_ip</code><span class="sig-paren">(</span><em class="sig-param">&quot;127.0.0.1&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for vulnerabilities impacting ip address.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_ip_port">
+<code class="sig-name descname">find_by_ip_port</code><span class="sig-paren">(</span><em class="sig-param">&quot;127.0.0.1&quot;</em>, <em class="sig-param">&quot;22&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_ip_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for vulnerabilities impacting ip address and his port.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_ips">
+<code class="sig-name descname">find_by_ips</code><span class="sig-paren">(</span><em class="sig-param">&quot;127.0.0.1&quot;</em>, <em class="sig-param">&quot;192.168.0.1&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_ips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for vulnerabilities impacting ip addresses.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_ips_ports">
+<code class="sig-name descname">find_by_ips_ports</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">&quot;127.0.0.1&quot;</em>, <em class="sig-param">&quot;192.168.0.1&quot;</em><span class="optional">]</span><span class="optional">[</span>, <em class="sig-param">&quot;22&quot;</em>, <em class="sig-param">&quot;80&quot;</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_ips_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for vulnerabilities impacting ips addresses and their ports.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_metasploit_exploitability">
+<code class="sig-name descname">find_by_metasploit_exploitability</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_metasploit_exploitability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports, and the metasploit exploit name if available,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_nessus_exploitability">
+<code class="sig-name descname">find_by_nessus_exploitability</code><span class="sig-paren">(</span><em class="sig-param">fullinfo=False</em><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus.find_by_nessus_exploitability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_pluginID">
+<code class="sig-name descname">find_by_pluginID</code><span class="sig-paren">(</span><em class="sig-param">80101</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_pluginID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search IP addresses impacted by the Nessus plugin ID.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_pluginIDs">
+<code class="sig-name descname">find_by_pluginIDs</code><span class="sig-paren">(</span><em class="sig-param">fullinfo=False</em>, <em class="sig-param">*pluginsIDS</em><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus.find_by_pluginIDs" title="Permalink to this definition">¶</a></dt>
+<dd><p>find_by_pluginIDS(“80101”, 80102) -&gt; set
+Search IP addresses impacted by multiples Nessus plugins ID.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_pluginName">
+<code class="sig-name descname">find_by_pluginName</code><span class="sig-paren">(</span><em class="sig-param">&quot;SSH&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_pluginName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search IP addresses impacted by the Nessus plugins names.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_pluginNames">
+<code class="sig-name descname">find_by_pluginNames</code><span class="sig-paren">(</span><em class="sig-param">&quot;SSL&quot;</em>, <em class="sig-param">&quot;ssh&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_pluginNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search IP addresses impacted by multiples Nessus plugins name.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_port">
+<code class="sig-name descname">find_by_port</code><span class="sig-paren">(</span><em class="sig-param">&quot;22&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for port impacted by vulnerabilities.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_ports">
+<code class="sig-name descname">find_by_ports</code><span class="sig-paren">(</span><em class="sig-param">&quot;22&quot;</em>, <em class="sig-param">80</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ports impacted by vulnerabilities.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_severities">
+<code class="sig-name descname">find_by_severities</code><span class="sig-paren">(</span><em class="sig-param">&quot;1&quot;</em>, <em class="sig-param">&quot;critical&quot;</em>, <em class="sig-param">2</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_severities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ip addresses impacted by vulnerabilities of multiples severity defined by Nessus.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.find_by_severity">
+<code class="sig-name descname">find_by_severity</code><span class="sig-paren">(</span><em class="sig-param">&quot;critical&quot;</em><span class="sig-paren">)</span> &#x2192; set<a class="headerlink" href="#parser.nessus.Nessus.find_by_severity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.</p>
+<p>When the logger is in “INFO” mode, the ips addresses are displayed on the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A collection containing all ip addresses and ports,
+or an empty collection if no address is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.print_raw">
+<code class="sig-name descname">print_raw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus.print_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>print_raw -&gt; None
+Displays the raw data on the standard output.</p>
+<p>The logger must be in “INFO” mode, for display on the standard output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.print_statistics">
+<code class="sig-name descname">print_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#parser.nessus.Nessus.print_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print statistics about parsed reports</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="parser.nessus.Nessus.print_targets">
+<code class="sig-name descname">print_targets</code><span class="sig-paren">(</span><em class="sig-param">False</em>, <em class="sig-param">&quot;;&quot;</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#parser.nessus.Nessus.print_targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays all ip addresses present info parsed reports</p>
+<p>The logger must be in “INFO” mode, for display on the standard output.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-parser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-parser" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Neko
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

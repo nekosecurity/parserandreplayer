@@ -1,0 +1,18 @@
+[package]
+name = "RustParser"
+version = "0.1.0"
+authors = ["neko"]
+edition = "2018"
+
+
+[lib]
+name = "neko_libparser"
+crate-type = ["cdylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde-xml-rs="0.3.1"
+serde = "1.0.98"
+serde_derive = "1.0.98"
+cpython = "0.3.0"

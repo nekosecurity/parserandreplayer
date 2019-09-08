@@ -1,0 +1,9 @@
+include MANIFEST.in
+include LICENSE
+include requirements.txt
+recursive-include ParserAndReplayer/config
+recursive-include ParserAndReplayer/lib
+recursive-exclude * __pycache__
+recursive-exclude * *.pyc
+recursive-exclude * *.pyo
+recursive-exclude * *.orig
