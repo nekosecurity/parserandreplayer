@@ -116,7 +116,7 @@ class NessusAnalyze:
 
 if __name__ == "__main__":
     desc = "Parse nessus"
-    example = "python extract.py file.nessus analyze --cve --verbose"
+    example = "parser_and_replayer.py analyze --cve file.nessus"
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example)
 
     # Options
