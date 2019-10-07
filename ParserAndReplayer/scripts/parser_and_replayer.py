@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
     # Mandatory
     mandatory = parser.add_argument_group("Mandatory")
-    mandatory.add_argument("filename", help='.nessus file', nargs='?')
+    mandatory.add_argument("filename", help='.nessus file')
 
 
 
