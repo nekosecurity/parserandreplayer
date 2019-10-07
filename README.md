@@ -142,6 +142,9 @@ The extra folder contains a python script that I use for SMB
 [Rust Nessus-rs](https://github.com/kpcyrd/nessus-rs)  
 [Pwntools](https://github.com/Gallopsled/pwntools) for `log.py` file
 
+# Issues
+It is possible that it will be necessary to recompile the library in rust
+
 # TODO
 - [ ] Redesign plugins system  
 - [ ] Add report fonctionnality  
