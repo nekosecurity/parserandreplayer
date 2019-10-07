@@ -6,7 +6,7 @@ setup(
     name='ParserAndReplayer',
     version='0.0.1',
     packages=["ParserAndReplayer", "ParserAndReplayer.config",
-              "ParserAndReplayer.constants", "ParserAndReplayer.lib",
+              "ParserAndReplayer.lib",
               "ParserAndReplayer.parser", "ParserAndReplayer.plugins"
             ],
     url='',
