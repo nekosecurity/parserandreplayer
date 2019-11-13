@@ -366,8 +366,6 @@ class Nessus:
         """
         results = set()
 
-        # for host in self._results['report']['report_host']:
-        #     for vuln in host['report_items']:
         for host in self._results['report']['report_host']:
             if host['ip'] == ip:
                 vulns = host['report_items']
@@ -389,15 +387,14 @@ class Nessus:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
         """
-        if type(cvss) is int or type(cvss) is float:
-            cvss = str(cvss)
+        _cvss = float(cvss)
         results = set()
         for host in self._results['report']['report_host']:
             for vuln in host['report_items']:
                 try:
-                    if float(vuln['cvss_base_score']) >= float(cvss):
+                    if float(vuln['cvss_base_score']) >= float(_cvss):
                         cvss = float(vuln['cvss_base_score'])
-                    if float(vuln['cvss3_base_score']) >= float(cvss):
+                    if float(vuln['cvss3_base_score']) >= float(_cvss):
                         cvss = float(vuln['cvss3_base_score'])
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)

@@ -116,7 +116,7 @@ class NessusAnalyze:
 
 if __name__ == "__main__":
     desc = "Parse nessus"
-    example = "parser_and_replayer.py analyze --cve file.nessus"
+    example = "python extract.py file.nessus analyze --cve --verbose"
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example)
 
     # Options
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     type_analyzer.add_argument('--severity', help="Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.", nargs="+")
     type_analyzer.add_argument('--port', help="Search for ports impacted by vulnerabilities.", nargs="+")
     type_analyzer.add_argument('--ip', help="Search for ips impacted by vulnerabilities.", nargs="+")
-    type_analyzer.add_argument('--cvss', help="Search for vulnerabilities with a CVSS score equal or higher.", type=str)
+    type_analyzer.add_argument('--cvss', help="Search for vulnerabilities with a CVSS score equal or higher.", type=float)
     type_analyzer.add_argument('--cve', help="Search for ips impacted by vulnerabilities.", action="store_true")
     type_analyzer.add_argument('--all-vuln-name', help="Search all vulnerabilities contained in the.nessus file", action="store_true")
     type_analyzer.add_argument('--statistics', help="Print statistics about parsed reports", action="store_true")
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
     # Mandatory
     mandatory = parser.add_argument_group("Mandatory")
-    mandatory.add_argument("filename", help='.nessus file')
+    mandatory.add_argument("filename", help='.nessus file', nargs='?')
 
 
 
