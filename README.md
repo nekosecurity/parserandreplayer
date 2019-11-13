@@ -48,7 +48,7 @@ The `replay.py` file contains the basic code for replay. It is divided into two 
 * RunInternalCode
 * RunExternalCode
 
-For `RunInternalCode`, the configuration file is installed here `$HOME/.config/ParserAndReplayer/ParserAndReplayer.conf`. This file contains the path of the tools you want to execute.
+For `RunExternalCode`, the configuration file is installed here `$HOME/.config/ParserAndReplayer/ParserAndReplayer.conf`. This file contains the path of the tools you want to execute.
 
 
 In addition, the replayer creates directories where the script is executed (ssh, banner, ssl, rdp, smb) and each directory contains a file with traces.
