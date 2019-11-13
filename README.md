@@ -55,12 +55,10 @@ In addition, the replayer creates directories where the script is executed (ssh,
 
 For example, the "plugin" folder currently contains:
 * replay_banner.py
-* replay_banner.pyc
 * replay_rdp.py
 * replay_smb.py
 * replay_ssh.py
 * replay_ssl.py
-* replay_ssl.pyc
 * replay_timestamp.py
 
 Below is the list of features:
