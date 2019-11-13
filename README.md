@@ -115,7 +115,7 @@ n = Nessus("file.nessus")
 n.find_all_cve(updatedb=True)
 
 # We list all vulnerabilities
-vulns = nessus.find_all_vuln_name()
+vulns = n.find_all_vuln_name()
 
 #ssh contains all ip:port in a set()
 ssh = n.find_by_pluginName("SSH")
@@ -129,7 +129,7 @@ print(n.find_by_pluginNames(fullinfo=True, "ssh", "ssl"))
 If we use the `parser_and_replayer.py` script:
 ```bash
 $ parser_and_replayer.py analyze --cve file.nessus
-$ parser_and_replayer.py --verbose --fullinfo analize --pluginName SSH RDP file.nessus
+$ parser_and_replayer.py --verbose --fullinfo analyze --pluginName SSH RDP file.nessus
 ```
 
 # Extra
