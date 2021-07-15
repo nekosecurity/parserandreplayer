@@ -116,7 +116,7 @@ class NessusAnalyze:
 
 if __name__ == "__main__":
     desc = "Parse nessus"
-    example = "python extract.py file.nessus analyze --cve --verbose"
+    example = "python parser_and_replayer.py --verbose analyze file.nessus --cve"
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example)
 
     # Options
@@ -126,7 +126,8 @@ if __name__ == "__main__":
     options.add_argument('--logger', help="Change the level of logger", type=int, default=1)
 
     # Analyzer
-    types = parser.add_subparsers()
+    # TODO: Issue with subparser()
+    types = parser.add_subparsers(dest="subparser")
     type_analyzer= types.add_parser("analyze", help="Performs an analysis of the nessus file")
     type_analyzer.add_argument('--pluginName', help="Search IP addresses impacted by the Nessus plugins names", nargs="+")
     type_analyzer.add_argument('--pluginID', help="Search IP addresses impacted by the Nessus plugins ID", nargs="+")
@@ -142,11 +143,11 @@ if __name__ == "__main__":
     type_analyzer.add_argument('--canvas_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.", action="store_true")
     type_analyzer.add_argument('--nessus_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Nessus.", action="store_true")
     type_analyzer.add_argument('--core_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.", action="store_true")
-
+    type_analyzer.add_argument("filename", help='.nessus file', nargs='?')
 
     # Mandatory
-    mandatory = parser.add_argument_group("Mandatory")
-    mandatory.add_argument("filename", help='.nessus file', nargs='?')
+    #mandatory = parser.add_argument_group("Mandatory")
+    #mandatory.add_argument("filename", help='.nessus file', nargs='?')
 
 
 
