@@ -74,8 +74,8 @@ class Nessus:
                                                      vuln['plugin_type'], vuln['service_name'], vuln['severity'],
                                                      vuln['risk_factor'], vuln['exploit_available'],
                                                      vuln['exploitability_ease'], str(vuln['osvdb']),
-                                                     vuln['cve'], vuln['cvss3_base_score'],
-                                                     vuln['cvss_base_score'], vuln['see_also'], vuln['description'], vuln['solution'],
+                                                     vuln['cve'], vuln['cvss_base_score'],
+                                                     vuln['cvss3_base_score'], vuln['see_also'], vuln['description'], vuln['solution'],
                                                      vuln['plugin_output'], vuln['nessus_script'],vuln['exploited_by_nessus'],
                                                      vuln['metasploit'],vuln['canvas'], vuln['core']
                                                      )
@@ -93,7 +93,7 @@ class Nessus:
         """
         if type(pluginID) is int:
             pluginID = str(pluginID)
-        if len(pluginID) != 5 or not pluginID.isdigit():
+        if not pluginID.isdigit():
             print("[!] PluginID format error.")
             exit(-2)
 
@@ -395,11 +395,13 @@ class Nessus:
                     if float(vuln['cvss_base_score']) >= float(_cvss):
                         cvss = float(vuln['cvss_base_score'])
                     if float(vuln['cvss3_base_score']) >= float(_cvss):
-                        cvss = float(vuln['cvss3_base_score'])
+                        cvss3 = float(vuln['cvss3_base_score'])
+                    else:
+                        break
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)
                     else:
-                        rootlogger.info("%s:%s [ID %s] %s (Score CVSS: %0.1f)" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName'], cvss))
+                        rootlogger.info("%s:%s [ID %s] %s (Score CVSS: %0.1f, Score CVSSv3: %0.1f)" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName'], cvss, cvss3))
                     results.add(host['ip']+':'+vuln['port'])
                 except:
                     continue
