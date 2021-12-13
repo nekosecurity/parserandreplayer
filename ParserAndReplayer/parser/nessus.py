@@ -677,7 +677,7 @@ class Nessus:
         print("")
         print("#" * 8 + "  STATISTICS  " + "#" * 8)
         print("")
-        print("Total targets:\t\t%d" % len(self._results.keys()))
+        print("Total targets:\t\t%d" % len(targets.keys()))
         print("Total vulns:\t\t%d\t[  unique:   %4d  ]" % (
         (vuln_high + vuln_med + vuln_low + vuln_info), len(vuln_high_uniq) \
         + len(vuln_med_uniq) + len(vuln_low_uniq) + len(vuln_info_uniq)))
