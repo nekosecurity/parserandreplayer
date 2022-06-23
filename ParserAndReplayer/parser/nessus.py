@@ -71,7 +71,7 @@ class Nessus:
                         'Exploit Metasploit: %s\n'
                         'Exploit Canvas: %s\n'
                         'Exploit Core Impact: %s' % (host, vuln['port'], vuln['pluginName'], vuln['pluginID'],
-                                                     vuln['plugin_type'], vuln['service_name'], vuln['severity'],
+                                                     vuln['plugin_type'], vuln['svc_name'], vuln['severity'],
                                                      vuln['risk_factor'], vuln['exploit_available'],
                                                      vuln['exploitability_ease'], str(vuln['osvdb']),
                                                      vuln['cve'], vuln['cvss_base_score'],

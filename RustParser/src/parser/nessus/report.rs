@@ -6,47 +6,46 @@ extern crate serde_xml_rs;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct NessusClientDatav2 {
-    #[serde(rename="Report")]
-    pub report: Report
+    #[serde(rename = "Report")]
+    pub report: Report,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Report {
     pub name: String,
-    #[serde(rename="ReportHost", default)]
-    pub report_hosts: Vec<ReportHost>
+    #[serde(rename = "ReportHost", default)]
+    pub report_hosts: Vec<ReportHost>,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct ReportHost {
     pub name: String,
-    #[serde(rename="HostProperties")]
+    #[serde(rename = "HostProperties")]
     pub host_properties: HostProperties,
-    #[serde(rename="ReportItem")]
+    #[serde(rename = "ReportItem")]
     pub report_items: Vec<ReportItem>,
 }
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct HostProperties {
-    #[serde(rename="tag")]
+    #[serde(rename = "tag")]
     pub tags: Vec<Tag>,
 }
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Tag {
     pub name: String,
-    #[serde(rename="$value")]
+    #[serde(rename = "$value")]
     pub value: String,
 }
 
-
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct ReportItem {
-    #[serde(rename="pluginName")]
+    #[serde(rename = "pluginName")]
     pub plugin_name: String,
-    #[serde(rename="pluginID")]
+    #[serde(rename = "pluginID")]
     pub plugin_id: String,
     pub plugin_type: String,
     #[serde(default)]
-    pub service_name: String,
+    pub svc_name: String,
     pub severity: String,
     pub risk_factor: String,
     pub protocol: String,
@@ -78,7 +77,7 @@ pub struct ReportItem {
     #[serde(default)]
     pub exploit_framework_metasploit: bool,
     #[serde(default)]
-    pub exploit_framework_canvas:bool,
+    pub exploit_framework_canvas: bool,
     #[serde(default)]
     pub canvas_package: Vec<String>,
     #[serde(default)]
@@ -92,10 +91,10 @@ pub struct ReportItem {
     #[serde(default)]
     pub patch_publication_date: String,
     #[serde(default)]
-    pub vuln_publication_date: String
+    pub vuln_publication_date: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Attachment {
-    pub name: String
+    pub name: String,
 }
