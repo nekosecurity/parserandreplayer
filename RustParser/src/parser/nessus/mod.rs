@@ -122,6 +122,10 @@ impl ToPyObject for report::ReportItem {
             .unwrap();
         dict.set_item(py, "core", &self.exploit_framework_core)
             .unwrap();
+        dict.set_item(py, "d2_elliot", &self.exploit_framework_d2_elliot)
+            .unwrap();
+        dict.set_item(py, "d2_elliot_name", &self.d2_elliot_name)
+            .unwrap();
         dict.set_item(py, "nessus_script", &self.fname).unwrap();
         dict.set_item(py, "synopsis", &self.synopsis).unwrap();
         dict.set_item(py, "attachment", &self.attachment).unwrap();

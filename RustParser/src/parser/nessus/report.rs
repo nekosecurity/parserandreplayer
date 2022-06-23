@@ -83,6 +83,10 @@ pub struct ReportItem {
     #[serde(default)]
     pub exploit_framework_core: bool,
     #[serde(default)]
+    pub exploit_framework_d2_elliot: bool,
+    #[serde(default)]
+    pub d2_elliot_name: String,
+    #[serde(default)]
     pub fname: String,
     #[serde(default)]
     pub synopsis: String,
