@@ -47,6 +47,8 @@ class NessusAnalyze:
             self.all_vuln_name()
         if options.statistics:
             self.statistics()
+        if options.print_targets():
+            self.print_targets()
 
 
     def pluginNames(self, pluginNames):
@@ -112,6 +114,8 @@ class NessusAnalyze:
     def statistics(self):
         self.n.print_statistics()
 
+    def print_targets(self):
+        self.n.print_targets(self.fullinfo)
 
 
 if __name__ == "__main__":
@@ -138,6 +142,7 @@ if __name__ == "__main__":
     type_analyzer.add_argument('--cve', help="Search for ips impacted by vulnerabilities.", action="store_true")
     type_analyzer.add_argument('--all-vuln-name', help="Search all vulnerabilities contained in the.nessus file", action="store_true")
     type_analyzer.add_argument('--statistics', help="Print statistics about parsed reports", action="store_true")
+    type_analyzer.add_argument('--statistics', help="Print targets in parsed reports", action="store_true")
 
     type_analyzer.add_argument('--metasploit_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit", action="store_true")
     type_analyzer.add_argument('--canvas_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.", action="store_true")
