@@ -70,14 +70,15 @@ class Nessus:
                         'Exploited by Nessus: %s\n'
                         'Exploit Metasploit: %s\n'
                         'Exploit Canvas: %s\n'
-                        'Exploit Core Impact: %s' % (host, vuln['port'], vuln['pluginName'], vuln['pluginID'],
+                        'Exploit Core Impact: %s\n'
+                        'Exploit D2 Elliot: %s' % (host, vuln['port'], vuln['pluginName'], vuln['pluginID'],
                                                      vuln['plugin_type'], vuln['svc_name'], vuln['severity'],
                                                      vuln['risk_factor'], vuln['exploit_available'],
                                                      vuln['exploitability_ease'], str(vuln['osvdb']),
                                                      vuln['cve'], vuln['cvss_base_score'],
                                                      vuln['cvss3_base_score'], vuln['see_also'], vuln['description'], vuln['solution'],
                                                      vuln['plugin_output'], vuln['nessus_script'],vuln['exploited_by_nessus'],
-                                                     vuln['metasploit'],vuln['canvas'], vuln['core']
+                                                     vuln['metasploit'],vuln['canvas'], vuln['core'], vuln['d2_elliot']
                                                      )
                         )
 
@@ -235,6 +236,28 @@ class Nessus:
                         rootlogger.info("%s:%s [ID %s] %s  -> %s" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName'],
                                                          vuln['metasploit_name']))
                     results.add(host['ip']+":"+vuln["port"]+" -> " + str(vuln['metasploit_name']))
+        return results
+    
+    def find_by_d2_elliot_exploitability(self, fullinfo=False):
+        r"""find_by_d2_elliot_exploitability() -> set
+        Search for ip addresses impacted by vulnerabilities that can be exploited by D2 Elliot.
+
+        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
+
+        Returns:
+           A collection containing all ip addresses and ports, and the d2 elliot exploit name if available,
+           or an empty collection if no address is found.
+        """
+        results = set()
+        for host in self._results['report']['report_host']:
+            for vuln in host['report_items']:
+                if vuln['d2_elliot'] == True:
+                    if fullinfo == True:
+                        self._all_info(host['ip'], vuln)
+                    else:
+                        rootlogger.info("%s:%s [ID %s] %s  -> %s" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName'],
+                                                         vuln['d2_elliot_name']))
+                    results.add(host['ip']+":"+vuln["port"]+" -> " + str(vuln['d2_elliot_name']))
         return results
 
     def find_by_canvas_exploitability(self, fullinfo=False):
@@ -532,6 +555,18 @@ class Nessus:
         for vuln in results:
             rootlogger.info("%s" % vuln)
         return results
+
+    # TODO
+    def print_target_with_ports(self, fullinfo=False, delim="|"):
+        for hosts in n._results['report']['report_host']:
+            for vulns in hosts['report_items']:
+                results.add((int(vulns['port']), vulns['svc_name']))
+            if len(results):
+                print(hosts['ip'])
+                print(sorted(results))
+            results = set()
+
+            
 
     def print_targets(self, fullinfo=False, delim="|"):
         r"""print_targets(False, ";") -> None

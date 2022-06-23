@@ -29,6 +29,8 @@ class NessusAnalyze:
             self.severities(options.severity)
         if options.metasploit_exploit:
             self.metasploit_exploit()
+        if options.d2_elliot_exploit:
+            self.d2_elliot_exploit()
         if options.canvas_exploit:
             self.canvas_exploit()
         if options.nessus_exploit:
@@ -70,6 +72,11 @@ class NessusAnalyze:
         results = self.n.find_by_metasploit_exploitability(self.fullinfo)
         if self.verbose:
             print(results)
+
+    def d2_elliot_exploit(self):
+        results = self.n.find_by_d2_elliot_exploitability(self.fullinfo):
+        if self.verbose:
+            print(result)
 
     def canvas_exploit(self):
         result = self.n.find_by_canvas_exploitability(self.fullinfo)
@@ -145,6 +152,7 @@ if __name__ == "__main__":
     type_analyzer.add_argument('--print_targets', help="Print targets in parsed reports", action="store_true")
 
     type_analyzer.add_argument('--metasploit_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit", action="store_true")
+    type_analyzer.add_argument('--d2_elliot_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by D2 Elliot", action="store_true")
     type_analyzer.add_argument('--canvas_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.", action="store_true")
     type_analyzer.add_argument('--nessus_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Nessus.", action="store_true")
     type_analyzer.add_argument('--core_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.", action="store_true")
