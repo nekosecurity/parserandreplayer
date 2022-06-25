@@ -12,7 +12,7 @@ from ParserAndReplayer.plugins.replay_banner import ReplayBanner
 
 class NessusAnalyze:
     def __init__(self, filename, options):
-        self.n = nessus.Nessus(filename)
+        self.n = nessus.Nessus(filename, options.verbose)
         self.fullinfo = options.fullinfo
         self.verbose = options.verbose
         if options.logger != 1:
@@ -49,8 +49,10 @@ class NessusAnalyze:
             self.all_vuln_name()
         if options.statistics:
             self.statistics()
-        if options.print_targets():
+        if options.print_targets:
             self.print_targets()
+        if options.interesting_vulns:
+            self.interesting_vulns()
 
 
     def pluginNames(self, pluginNames):
@@ -74,9 +76,9 @@ class NessusAnalyze:
             print(results)
 
     def d2_elliot_exploit(self):
-        results = self.n.find_by_d2_elliot_exploitability(self.fullinfo):
+        results = self.n.find_by_d2_elliot_exploitability(self.fullinfo)
         if self.verbose:
-            print(result)
+            print(results)
 
     def canvas_exploit(self):
         result = self.n.find_by_canvas_exploitability(self.fullinfo)
@@ -123,6 +125,10 @@ class NessusAnalyze:
 
     def print_targets(self):
         self.n.print_targets(self.fullinfo)
+    
+    def interesting_vulns(self):
+        print("plop")
+        self.n.find_interesting_vulns(self.fullinfo)
 
 
 if __name__ == "__main__":
@@ -132,7 +138,7 @@ if __name__ == "__main__":
 
     # Options
     options = parser.add_argument_group('Options')
-    options.add_argument('--verbose', help="Show ips with results", action="store_true")
+    options.add_argument('--verbose', help="Show ips with results", type=int, default=True)
     options.add_argument('--fullinfo', help="Show all vulnerability details", action="store_true", default=False)
     options.add_argument('--logger', help="Change the level of logger", type=int, default=1)
 
@@ -140,6 +146,7 @@ if __name__ == "__main__":
     # TODO: Issue with subparser()
     types = parser.add_subparsers(dest="subparser")
     type_analyzer= types.add_parser("analyze", help="Performs an analysis of the nessus file")
+    type_analyzer.add_argument('--interesting_vulns', help="Search for vulnerabilities of interest", action="store_true")
     type_analyzer.add_argument('--pluginName', help="Search IP addresses impacted by the Nessus plugins names", nargs="+")
     type_analyzer.add_argument('--pluginID', help="Search IP addresses impacted by the Nessus plugins ID", nargs="+")
     type_analyzer.add_argument('--severity', help="Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.", nargs="+")

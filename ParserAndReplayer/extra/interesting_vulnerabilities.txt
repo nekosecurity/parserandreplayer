@@ -1,0 +1,16 @@
+LDAP Crafted Search Request Server Information Disclosure
+DNS Server Zone Transfer Information Disclosure (AXFR)
+Redis Server Unprotected by Password Authentication
+SNMP Agent Default Community Name (public)
+PostgreSQL Default Unpassworded Account
+OpenSSL Heartbeat Information Disclosure (Heartbleed)
+NFS Share User Mountable
+Kerberos Information Disclosure
+NFS Share Export List
+Microsoft Windows SAM user enumeration
+MS17-010
+Microsoft Windows SMB NULL Session Authentication
+Microsoft Windows EFSRPC NTLM Reflection Elevation of Privilege (PetitPotam) (Remote)
+Apache Multiviews Arbitrary Directory Listing
+Web Server HTTP Header Internal IP Disclosure
+MongoDB Service Without Authentication Detection

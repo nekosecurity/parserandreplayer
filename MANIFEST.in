@@ -3,6 +3,7 @@ include LICENSE
 include requirements.txt
 recursive-include ParserAndReplayer/config
 recursive-include ParserAndReplayer/lib
+recursive-include ParserAndReplayer/extra
 recursive-exclude * __pycache__
 recursive-exclude * *.pyc
 recursive-exclude * *.pyo
