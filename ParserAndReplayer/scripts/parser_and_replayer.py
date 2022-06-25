@@ -12,7 +12,7 @@ from ParserAndReplayer.plugins.replay_banner import ReplayBanner
 
 class NessusAnalyze:
     def __init__(self, filename, options):
-        self.n = nessus.Nessus(filename, options.verbose)
+        self.n = nessus.Nessus(filename, options.verbose, options.output_format)
         self.fullinfo = options.fullinfo
         self.verbose = options.verbose
         if options.logger != 1:
@@ -127,7 +127,6 @@ class NessusAnalyze:
         self.n.print_targets(self.fullinfo)
     
     def interesting_vulns(self):
-        print("plop")
         self.n.find_interesting_vulns(self.fullinfo)
 
 
@@ -141,6 +140,7 @@ if __name__ == "__main__":
     options.add_argument('--verbose', help="Show ips with results", type=int, default=True)
     options.add_argument('--fullinfo', help="Show all vulnerability details", action="store_true", default=False)
     options.add_argument('--logger', help="Change the level of logger", type=int, default=1)
+    options.add_argument('--output_format', help="Change output format", type=str, choices=["csv", "table"], default="table")
 
     # Analyzer
     # TODO: Issue with subparser()

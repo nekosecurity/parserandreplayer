@@ -37,13 +37,14 @@ class Nessus:
     ]
     _blacklist_hit = 0
 
-    def __init__(self, filename, verbose=False):
+    def __init__(self, filename, verbose=False, output_type="csv"):
         if filename == None or filename == "":
             print("[!] No filename specified!")
             exit(-1)
         if filename.endswith(".nessus"):
             self._results = neko_libparser.parse_nessus(filename)
             self.verbose = verbose
+            self.display = pdisplay.display(output_type)
         else:
             print("[!] No file .nessus to parse was found!")
             exit(-2)
@@ -113,7 +114,7 @@ class Nessus:
                     results.add(host['ip'] + ":" + vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
         return results
 
     def find_by_pluginIDs(self, fullinfo=False, *pluginsIDS):
@@ -155,7 +156,7 @@ class Nessus:
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
                     results.add(host['ip']+':'+vuln['port'])
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
         return results
 
     def find_by_pluginNames(self, fullinfo=False, *pluginNames):
@@ -227,7 +228,7 @@ class Nessus:
                     results.add(host['ip']+":"+vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability", "Plugin ID"], sorted(r2))
         return results
 
     def find_by_metasploit_exploitability(self, fullinfo=False):
@@ -253,7 +254,7 @@ class Nessus:
                     results.add(host['ip']+":"+vuln["port"]+" -> " + str(vuln['metasploit_name']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", str(vuln['metasploit_name'])))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "Metasploit exploit"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability (PluginID)", "Metasploit exploit"], sorted(r2))
         return results
     
     def find_by_d2_elliot_exploitability(self, fullinfo=False):
@@ -276,7 +277,7 @@ class Nessus:
                     results.add(host['ip']+":"+vuln["port"]+" -> " + str(vuln['d2_elliot_name']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", vuln['d2_elliot_name']))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "D2 Elliot exploit"], sorted(r2))    
+            self.display(["IP", "Port", "Vulnerability (PluginID)", "D2 Elliot exploit"], sorted(r2))    
         return results
 
     def find_by_canvas_exploitability(self, fullinfo=False):
@@ -299,7 +300,7 @@ class Nessus:
                     results.add(host['ip']+":"+vuln['port']+" -> " + str(vuln['canvas_package']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", str(vuln['canvas_package'])))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "Canvas exploit"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability (PluginID)", "Canvas exploit"], sorted(r2))
         return results
 
     def find_by_nessus_exploitability(self, fullinfo=False):
@@ -313,7 +314,7 @@ class Nessus:
                     results.add(host['ip'] + ":" + vuln['port'] + " -> " + str(vuln['exploited_by_nessus']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", vuln['exploited_by_nessus']))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "Nessus exploit"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability (PluginID)", "Nessus exploit"], sorted(r2))
         return results
 
     def find_by_core_exploitability(self, fullinfo=False):
@@ -337,7 +338,7 @@ class Nessus:
                     results.add(host['ip'] + ":" + vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", "\n".join(vuln['core_exploit'])))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "Canvas exploit"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability (PluginID)", "Canvas exploit"], sorted(r2))
         return results
 
     def find_by_ports(self, fullinfo=False, *ports):
@@ -380,7 +381,7 @@ class Nessus:
                     results.add(host['ip']+":"+vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
             if self.verbose:
-                pdisplay.table_display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
+                self.display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
         return results
 
     def find_by_ips(self, fullinfo=False, *ips):
@@ -421,7 +422,7 @@ class Nessus:
             results.add(ip+":"+vuln['port'])
             r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
-            pdisplay.table_display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
+            self.display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
         return results
 
     def find_by_cvss(self, cvss, fullinfo=False):
@@ -455,7 +456,7 @@ class Nessus:
                 except:
                     continue
         if self.verbose:
-                pdisplay.table_display(["IP", "Port", "Vulnerability (PluginID)", "CVSS v2", "CVSS v3"], sorted(r2))
+                self.display(["IP", "Port", "Vulnerability (PluginID)", "CVSS v2", "CVSS v3"], sorted(r2))
         return results
 
     def find_by_ips_ports(self, ips, ports, fullinfo=False):
@@ -504,7 +505,7 @@ class Nessus:
                 results.add(ip+":"+vuln['port'])
                 r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
-                pdisplay.table_display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
+                self.display(["IP", "Port", "Vulnerability", "PluginID"], sorted(r2))
         return results
 
     def print_raw(self):
@@ -564,7 +565,7 @@ class Nessus:
             rootlogger.info("%s" % vuln)
 
         #if self.verbose:
-        #        pdisplay.table_display(["Vulnerability", "Exploit"], sorted(r2))
+        #        self.display(["Vulnerability", "Exploit"], sorted(r2))
         return results
 
     def find_all_vuln_name(self, fullinfo=False):
@@ -591,7 +592,7 @@ class Nessus:
         #for vuln in results:
         #    rootlogger.info("%s" % vuln)
         if self.verbose:
-            pdisplay.table_display(["Vulnerability", "PluginID"], r2)
+            self.display(["Vulnerability", "PluginID"], r2)
 
         return results
 
@@ -605,7 +606,7 @@ class Nessus:
             if len(results):
                 print(hosts['ip'])
                 print(sorted(results))
-            pdisplay.table_display(["Port", "Service"], results)
+            self.display(["Port", "Service"], results)
             results = set()
 
             
