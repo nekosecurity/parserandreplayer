@@ -32,6 +32,9 @@ def csv_display(headers, values):
     if not len(values):
         return 
     print(",".join(headers))
+
+    # convert all elements in values to str
+    values = [map(str, v) for v in values]
     for v in values:
         print(",".join(v))
 

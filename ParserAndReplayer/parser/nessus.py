@@ -2,7 +2,7 @@ from ParserAndReplayer.lib import neko_libparser
 from ParserAndReplayer.log import *
 import ParserAndReplayer.helpers.display as pdisplay
 import importlib.resources
-
+from pprint import pprint
 #    {
 #        report {
 #        name: '',
@@ -37,14 +37,14 @@ class Nessus:
     ]
     _blacklist_hit = 0
 
-    def __init__(self, filename, verbose=False, output_type="csv"):
+    def __init__(self, filename, verbose=False, output="table"):
         if filename == None or filename == "":
             print("[!] No filename specified!")
             exit(-1)
         if filename.endswith(".nessus"):
             self._results = neko_libparser.parse_nessus(filename)
             self.verbose = verbose
-            self.display = pdisplay.display(output_type)
+            self.display = pdisplay.display(output)
         else:
             print("[!] No file .nessus to parse was found!")
             exit(-2)
@@ -53,7 +53,7 @@ class Nessus:
         r"""
         Display all information about the vulnerability
         """
-        rootlogger.info('Host: %s:%s\n'
+        print('Host: %s:%s\n'
                         'Plugin Name: %s\n'
                         'Plugin ID: %s\n'
                         'Plugin Type: %s\n'
@@ -90,8 +90,6 @@ class Nessus:
         r"""find_by_pluginID(80101) -> set
         Search IP addresses impacted by the Nessus plugin ID.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -109,8 +107,6 @@ class Nessus:
                 if vuln['pluginID'] == pluginID:
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)
-                    #else:
-                    #    rootlogger.info("%s: %s:%s" % (vuln['pluginName'], host['ip'], vuln["port"]))
                     results.add(host['ip'] + ":" + vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
@@ -120,8 +116,6 @@ class Nessus:
     def find_by_pluginIDs(self, fullinfo=False, *pluginsIDS):
         r"""find_by_pluginIDS("80101", 80102) -> set
         Search IP addresses impacted by multiples Nessus plugins ID.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -138,8 +132,6 @@ class Nessus:
         r"""find_by_pluginName("SSH") -> set
         Search IP addresses impacted by the Nessus plugins names.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -151,8 +143,6 @@ class Nessus:
                 if vuln['pluginName'].lower().find(pluginName.lower()) >= 0:
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)
-                    #else:
-                    #    rootlogger.info("%s:%s [ID %s] %s" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
                     results.add(host['ip']+':'+vuln['port'])
         if self.verbose:
@@ -162,8 +152,6 @@ class Nessus:
     def find_by_pluginNames(self, fullinfo=False, *pluginNames):
         r"""find_by_pluginNames("SSL", "ssh") -> set
         Search IP addresses impacted by multiples Nessus plugins name.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -180,8 +168,6 @@ class Nessus:
         r"""find_by_severities("1", "critical", 2) -> set
         Search for ip addresses impacted by vulnerabilities of multiples severity defined by Nessus.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -196,8 +182,6 @@ class Nessus:
     def find_by_severity(self, severity, fullinfo=False):
         r"""find_by_severity("critical") -> set
         Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -223,8 +207,6 @@ class Nessus:
                 if vuln['severity'] == severity:
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)
-                    #else:
-                    #    rootlogger.info("%s:%s [ID %s] %s" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName']))
                     results.add(host['ip']+":"+vuln['port'])
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'], vuln['pluginID']))
         if self.verbose:
@@ -234,8 +216,6 @@ class Nessus:
     def find_by_metasploit_exploitability(self, fullinfo=False):
         r"""find_by_metasploit_exploitability() -> set
         Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
            A collection containing all ip addresses and ports, and the metasploit exploit name if available,
@@ -248,9 +228,6 @@ class Nessus:
                 if vuln['metasploit'] == True:
                     if fullinfo == True:
                         self._all_info(host['ip'], vuln)
-                    #else:
-                    #    rootlogger.info("%s:%s [ID %s] %s  -> %s" % (host['ip'], vuln['port'], vuln['pluginID'], vuln['pluginName'],
-                    #                                     vuln['metasploit_name']))
                     results.add(host['ip']+":"+vuln["port"]+" -> " + str(vuln['metasploit_name']))
                     r2.add((host['ip'], vuln["port"], vuln['pluginName'] + f"({vuln['pluginID']})", str(vuln['metasploit_name'])))
         if self.verbose:
@@ -260,8 +237,6 @@ class Nessus:
     def find_by_d2_elliot_exploitability(self, fullinfo=False):
         r"""find_by_d2_elliot_exploitability() -> set
         Search for ip addresses impacted by vulnerabilities that can be exploited by D2 Elliot.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
            A collection containing all ip addresses and ports, and the d2 elliot exploit name if available,
@@ -284,8 +259,6 @@ class Nessus:
         r"""find_by_canvas_exploitability() -> set
         Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
            A collection containing all ip addresses and ports, and the canvas exploit name if available,
            or an empty collection if no address is found.
@@ -304,6 +277,13 @@ class Nessus:
         return results
 
     def find_by_nessus_exploitability(self, fullinfo=False):
+        r"""find_by_nessus_exploitability() -> set
+        Search for ip addresses impacted by vulnerabilities that can be exploited by Nessus.
+
+        Returns:
+           A collection containing all ip addresses and ports and exploited,
+           or an empty collection if no address is found.
+        """
         results = set()
         r2 = set()
         for host in self._results['report']['report_host']:
@@ -320,8 +300,6 @@ class Nessus:
     def find_by_core_exploitability(self, fullinfo=False):
         r"""find_by_core_exploitability() -> set
         Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
            A collection containing all ip addresses and ports,
@@ -345,8 +323,6 @@ class Nessus:
         r"""find_by_ports("22", 80) -> set
         Search for ports impacted by vulnerabilities.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -361,8 +337,6 @@ class Nessus:
     def find_by_port(self, port, fullinfo=False):
         r"""find_by_port("22") -> set
         Search for port impacted by vulnerabilities.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -388,8 +362,6 @@ class Nessus:
         r"""find_by_ips("127.0.0.1", "192.168.0.1") -> set
         Search for vulnerabilities impacting ip addresses.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -404,8 +376,6 @@ class Nessus:
     def find_by_ip(self, ip, fullinfo=False):
         r"""find_by_ip("127.0.0.1") -> set
         Search for vulnerabilities impacting ip address.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -463,8 +433,6 @@ class Nessus:
         r"""find_by_ips_ports(["127.0.0.1", "192.168.0.1"], ["22", "80"]) -> set
         Search for vulnerabilities impacting ips addresses and their ports.
 
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
-
         Returns:
             A collection containing all ip addresses and ports,
             or an empty collection if no address is found.
@@ -484,8 +452,6 @@ class Nessus:
     def find_by_ip_port(self, ip, port, fullinfo=False):
         r"""find_by_ip_port("127.0.0.1", "22") -> set
         Search for vulnerabilities impacting ip address and his port.
-
-        When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
 
         Returns:
             A collection containing all ip addresses and ports,
@@ -516,9 +482,9 @@ class Nessus:
         """
 
         if self._results:
-            rootlogger.info(self._results)
+            print(self._results)
         else:
-            rootlogger.warning("No information available")
+            print("No information available")
 
     #TODO: Print table isn't very readable
     def find_all_cve(self, updatedb=False):
@@ -562,7 +528,7 @@ class Nessus:
                     results.add(vuln['pluginName'] + " : " + str(exploit))
                     r2.add((vuln['pluginName'], str(exploit)))
         for vuln in results:
-            rootlogger.info("%s" % vuln)
+            print("%s" % vuln)
 
         #if self.verbose:
         #        self.display(["Vulnerability", "Exploit"], sorted(r2))
@@ -584,29 +550,22 @@ class Nessus:
         for host in self._results['report']['report_host']:
             for vuln in host['report_items']:
                 if fullinfo == True:
-                    self._all_info(host['ip'], vuln)
-                #else:
+                    print(host['ip'], vuln)
                 results.add(vuln['pluginName'])
                 r2.add((vuln["pluginName"], vuln['pluginID']))
 
-        #for vuln in results:
-        #    rootlogger.info("%s" % vuln)
         if self.verbose:
             self.display(["Vulnerability", "PluginID"], r2)
 
         return results
 
-    # TODO
-    def print_target_with_ports(self, fullinfo=False):
+    def print_target_with_ports(self):
         results = set()
         for hosts in self._results['report']['report_host']:
             for vulns in hosts['report_items']:
                 if vulns['port'] != "0":
-                    results.add((int(vulns['port']), vulns['svc_name']))
-            if len(results):
-                print(hosts['ip'])
-                print(sorted(results))
-            self.display(["Port", "Service"], results)
+                    results.add((hosts['ip'],int(vulns['port']), vulns['svc_name']))
+            self.display(["IP", "Port", "Service"], sorted(results))
             results = set()
 
             
@@ -614,15 +573,14 @@ class Nessus:
         r"""print_targets(False, ";") -> None
         Displays all ip addresses present info parsed reports
 
-        The logger must be in "INFO" mode, for display on the standard output.
         """
-
+        results = set()
         for host in self._results['report']['report_host']:
             info = {
                 'scan_start':        '',
                 'scan_stop':         '',
                 'os':                '',
-                'hostname':          '',
+                'hostname':          'N/A',
                 'netbios_name':      'N/A',
                 'mac_address':       'N/A'
             }
@@ -642,14 +600,14 @@ class Nessus:
                     info['mac_address'] = tag['value']
 
             if fullinfo == True:
-                rootlogger.info('ip:%s%snetbios:%s%sos:%s%sscan_start:%s%sscan_end:%s%smac_address:%s' % (host['ip'], delim,
+                print('ip:%s%snetbios:%s%sos:%s%sscan_start:%s%sscan_end:%s%smac_address:%s' % (host['ip'], delim,
                                             info['netbios_name'], delim,
                                             info['os'], delim,
                                             info['scan_start'], delim,
                                             info['scan_stop'], delim,
                                             info['mac_address']))
-            else:
-                rootlogger.info("%s %s" % (host['ip'], info['hostname']))
+            results.add((host['ip'], info['hostname']))
+        self.display(["IP", "Hostname"], results)
 
     def print_statistics(self):
         r"""
