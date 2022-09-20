@@ -8,7 +8,9 @@ from ParserAndReplayer.plugins.replay_ssh import ReplaySSH
 from ParserAndReplayer.plugins.replay_ssl import ReplaySSL
 from ParserAndReplayer.plugins.replay_rdp import ReplayRDP
 from ParserAndReplayer.plugins.replay_banner import ReplayBanner
-
+import subprocess
+import json
+from pprint import pprint
 
 class NessusAnalyze:
     def __init__(self, filename, options):
@@ -113,7 +115,16 @@ class NessusAnalyze:
     def cve(self):
         results = self.n.find_all_cve(updatedb=True)
         if self.verbose:
-            print(results)
+            results = json.loads(results)
+            pprint(results)
+            """
+            echo = subprocess.Popen(["echo", results], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            proc = subprocess.Popen(["jq"], stdin=echo.stdout, stdout=subprocess.PIPE)
+            success, err = proc.communicate()
+            if success:
+                print(success.decode())
+            #print(results)
+            """
 
     def all_vuln_name(self):
         results = self.n.find_all_vuln_name(self.fullinfo)

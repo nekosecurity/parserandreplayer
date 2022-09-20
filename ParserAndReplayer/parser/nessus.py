@@ -3,6 +3,8 @@ from ParserAndReplayer.log import *
 import ParserAndReplayer.helpers.display as pdisplay
 import importlib.resources
 from pprint import pprint
+import json
+
 #    {
 #        report {
 #        name: '',
@@ -502,17 +504,18 @@ class Nessus:
         pEdb.debug = False
         pEdb.autoUpdate = updatedb
         pEdb.openFile()
-
-        results = set()
+        results = dict()
         r2 = set()
         exploit = {}
         exploit_codes = {}
         already_printed = []
+        tmp = {}
         for host in self._results['report']['report_host']:
             for vuln in host['report_items']:
                 if len(vuln['cve']) > 0:
                     for cve in vuln['cve']:
                         if not cve in already_printed:
+                            # CVE printed by PyExploitedDb :(
                             s = pEdb.searchCve(cve)
                             """
                             {'edbid': '41987', 'exploit': '/home/neko/.virtualenvs/ParserAndReplayer/lib/python3.6/site-packages/pyExploitDb/exploit-database/exploits/windows_x86-64/remote/41987.py',
@@ -522,17 +525,18 @@ class Nessus:
                                 s = {"exploit":''}
                             exploit_codes[cve] = s['exploit']
                             already_printed.append(cve)
-
                     exploit = exploit_codes
                     exploit_codes = {}
-                    results.add(vuln['pluginName'] + " : " + str(exploit))
-                    r2.add((vuln['pluginName'], str(exploit)))
-        for vuln in results:
-            print("%s" % vuln)
-
+                    if len(exploit) > 0:
+                        results[vuln['pluginName']] = exploit
+                        
+                            
+                    
+                    #r2.add((vuln['pluginName'], str(exploit)))
         #if self.verbose:
         #        self.display(["Vulnerability", "Exploit"], sorted(r2))
-        return results
+        # convert to json to avoid simple quote
+        return json.dumps(results)
 
     def find_all_vuln_name(self, fullinfo=False):
         r"""find_all_vuln_name() -> set
