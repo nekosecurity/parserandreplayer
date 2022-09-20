@@ -115,7 +115,6 @@ class NessusAnalyze:
     def cve(self):
         results = self.n.find_all_cve(updatedb=True)
         if self.verbose:
-            results = json.loads(results)
             pprint(results)
             """
             echo = subprocess.Popen(["echo", results], stdin=subprocess.PIPE, stdout=subprocess.PIPE)

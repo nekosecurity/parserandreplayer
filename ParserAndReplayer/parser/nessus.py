@@ -490,7 +490,7 @@ class Nessus:
 
     #TODO: Print table isn't very readable
     def find_all_cve(self, updatedb=False):
-        r"""find_all_cve(updatedb=False) -> set
+        r"""find_all_cve(updatedb=False) -> str
             Search all cve contained in the.nessus file
 
             When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
@@ -509,7 +509,6 @@ class Nessus:
         exploit = {}
         exploit_codes = {}
         already_printed = []
-        tmp = {}
         for host in self._results['report']['report_host']:
             for vuln in host['report_items']:
                 if len(vuln['cve']) > 0:
@@ -536,7 +535,7 @@ class Nessus:
         #if self.verbose:
         #        self.display(["Vulnerability", "Exploit"], sorted(r2))
         # convert to json to avoid simple quote
-        return json.dumps(results)
+        return json.loads(json.dumps(results))
 
     def find_all_vuln_name(self, fullinfo=False):
         r"""find_all_vuln_name() -> set
