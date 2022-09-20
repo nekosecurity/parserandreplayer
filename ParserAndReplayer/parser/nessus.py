@@ -4,6 +4,7 @@ import ParserAndReplayer.helpers.display as pdisplay
 import importlib.resources
 from pprint import pprint
 import json
+import sys, os
 
 #    {
 #        report {
@@ -490,7 +491,7 @@ class Nessus:
 
     #TODO: Print table isn't very readable
     def find_all_cve(self, updatedb=False):
-        r"""find_all_cve(updatedb=False) -> str
+        r"""find_all_cve(updatedb=False) -> dict
             Search all cve contained in the.nessus file
 
             When the logger is in "INFO" mode, the ips addresses are displayed on the standard output.
@@ -515,7 +516,9 @@ class Nessus:
                     for cve in vuln['cve']:
                         if not cve in already_printed:
                             # CVE printed by PyExploitedDb :(
+                            sys.stdout = open(os.devnull, 'w')
                             s = pEdb.searchCve(cve)
+                            sys.stdout = sys.__stdout__
                             """
                             {'edbid': '41987', 'exploit': '/home/neko/.virtualenvs/ParserAndReplayer/lib/python3.6/site-packages/pyExploitDb/exploit-database/exploits/windows_x86-64/remote/41987.py',
                             'date': '2017-05-10', 'author': 'Juan Sacco', 'platform': 'remote', 'type': 'windows_x86-64', 'port': ''}
