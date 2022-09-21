@@ -14,3 +14,5 @@ Microsoft Windows EFSRPC NTLM Reflection Elevation of Privilege (PetitPotam) (Re
 Apache Multiviews Arbitrary Directory Listing
 Web Server HTTP Header Internal IP Disclosure
 MongoDB Service Without Authentication Detection
+Backup Files Disclosure
+
