@@ -12,7 +12,7 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde-xml-rs="0.5.1"
-serde = "1.0.98"
-serde_derive = "1.0.98"
-cpython = "0.7.0"
+serde-xml-rs="0.6.0"
+serde = "1.0.163"
+serde_derive = "1.0.163"
+cpython = "0.7.1"
