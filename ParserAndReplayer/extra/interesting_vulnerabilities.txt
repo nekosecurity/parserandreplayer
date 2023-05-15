@@ -15,4 +15,6 @@ Apache Multiviews Arbitrary Directory Listing
 Web Server HTTP Header Internal IP Disclosure
 MongoDB Service Without Authentication Detection
 Backup Files Disclosure
+Microsoft Exchange Server Authentication Bypass
+SMB NULL Session Authentication
 
