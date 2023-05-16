@@ -17,29 +17,21 @@ As the project name indicates, it is possible to analyze a Nessus scan but also 
 ## Parser
 As explained above, I added some new features to the existing one.
 
-Below is a list of the features of the parser:
-* def find_by_pluginID(self, pluginID, fullinfo=False)
-* def find_by_pluginIDs(self, fullinfo=False, *pluginsIDS)
-* def find_by_pluginName(self, pluginName, fullinfo=False)
-* def find_by_pluginNames(self, fullinfo=False, *pluginNames)
-* def find_by_severities(self, fullinfo=False, *severities)
-* def find_by_severity(self, severity, fullinfo=False)
-* def find_by_metasploit_exploitability(self, fullinfo=False)
-* def find_by_canvas_exploitability(self, fullinfo=False)
-* def find_by_nessus_exploitability(self, fullinfo=False)
-* def find_by_core_exploitability(self, fullinfo=False)
-* def find_by_ports(self, fullinfo=False, *ports)
-* def find_by_port(self, port, fullinfo=False)
-* def find_by_ips(self, fullinfo=False, *ips)
-* def find_by_ip(self, ip, fullinfo=False)
-* def find_by_cvss(self, cvss, fullinfo=False)
-* def find_by_ips_ports(self, ips, ports, fullinfo=False)
-* def find_by_ip_port(self, ip, port, fullinfo=False)
-* def print_raw(self)
-* def find_all_cve(self, updatedb=False)
-* def find_all_vuln_name(self, fullinfo=False)
-* def print_targets(self, fullinfo=False, delim="|")
-* def print_statistics(self)
+Below is a complete list of the parser's features:
+* Find by plugin id 
+* Find by plugin name
+* Find by severity
+* Find by framework exploitability (Metasploit, Canvas, Nessus, Core Impact)
+* Find by port
+* Find by IP
+* Find by CVSS
+* Find by IP port
+* Print raw data
+* Find all CVE
+* Find all vulnerabilities name
+* Print all targets
+* Print Dtatistics
+* Find by list of interesting vulnerabilities
 
 ## Replayer
 I tried to develop the modular replayer part, with a common base and add plugins by type of replay desired.
@@ -83,7 +75,6 @@ Below is the list of features:
     * run_icmpquery
 
 # Installation
-First of all, you have to compile the parser in Rust and copy the library into the lib folder of ParserAndReplayer.  
 It is important to specify this library only works with **Python 3** 
 ```
 make install
@@ -97,10 +88,10 @@ git pull
 ```
 
 # Usage
-In order to take full advantage of the features offered by the library, it is necessary to modify the location of the different tools that will be used during replay.  
-  
-First, check the tool path in the `$HOME/.config/ParserAndReplayer/ParserAndReplayer.conf` file.
+In order to take full benefit of the features offered by the library, it's necessary to change all the tools locations that will be used during the replay.    
+Check the configuration file `$HOME/.config/ParserAndReplayer/ParserAndReplayer.conf`.
 
+## Usage as lib
 ```python
 from ParserAndReplayer.parser.nessus import Nessus
 from ParserAndReplayer.plugins.replay_ssh import ReplaySSH
@@ -120,22 +111,19 @@ ReplaySSH(ssh).run_sshaudit()
 print(n.find_by_pluginNames(fullinfo=True, "ssh", "ssl"))
 ```
 
-If we use the `parser_and_replayer.py` script:
+## Usage `parser_and_replayer.py` script
 ```bash
 $ parser_and_replayer.py analyze --cve file.nessus
 $ parser_and_replayer.py --verbose --fullinfo analyze --pluginName SSH RDP file.nessus
 ```
 
 # Extra
-The extra folder contains a python script that I use for SMB
+The extra folder contains a python script that I use for SMB and a list of interesting vulnerabilities
 
 # References
 [Yet Another Nessus Parser](https://github.com/adipinto/yet-another-nessus-parser)  
 [Rust Nessus-rs](https://github.com/kpcyrd/nessus-rs)  
 [Pwntools](https://github.com/Gallopsled/pwntools) for `log.py` file
-
-# Issues
-It is possible that it will be necessary to recompile the library in rust
 
 # TODO
 - [ ] Redesign plugins system  
