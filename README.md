@@ -86,14 +86,8 @@ Below is the list of features:
 First of all, you have to compile the parser in Rust and copy the library into the lib folder of ParserAndReplayer.  
 It is important to specify this library only works with **Python 3** 
 ```
-cargo build --release
-cp target/libneko_parser $PATH_OF_ParserAndReplayer/lib/neko_libparser.so
-```
-
-After that:
-```
-pip3 install -r requirements.txt
-pip3 install .
+make install
+make clean
 ```
 
 # Update
