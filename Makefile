@@ -13,6 +13,6 @@ install: build-parser move-lib
 
 clean:
 	cargo clean --release --manifest-path=$(RUST_PARSER_PATH)/Cargo.toml
-	rm -r build *.egg-info
+	rm -r build *.egg-info $(PARSER_AND_REPLAYER_PATH)/lib
 
 .PHONY: clean

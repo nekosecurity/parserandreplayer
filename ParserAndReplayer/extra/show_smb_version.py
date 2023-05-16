@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
-from impacket.smbconnection import SMBConnection, SMB_DIALECT, SMB2_DIALECT_002, SMB2_DIALECT_21, SMB2_DIALECT_30, SessionError
+from impacket.smbconnection import (
+    SMBConnection,
+    SMB_DIALECT,
+    SMB2_DIALECT_002,
+    SMB2_DIALECT_21,
+    SMB2_DIALECT_30,
+    SessionError,
+)
 from impacket.dcerpc.v5.transport import DCERPCTransportFactory
-from impacket.dcerpc.v5.rpcrt import  DCERPCException
+from impacket.dcerpc.v5.rpcrt import DCERPCException
 from impacket.dcerpc.v5.epm import MSRPC_UUID_PORTMAP
 from sys import argv
 import argparse
@@ -10,6 +17,7 @@ from os import path
 
 from re import search, compile
 from socket import gethostbyname
+
 
 class SMBRecon:
     def __init__(self, host, port, smbversion):
@@ -23,15 +31,15 @@ class SMBRecon:
 
     def get_os_arch(self, host):
         try:
-            stringBinding = r'ncacn_ip_tcp:{}[135]'.format(host)
+            stringBinding = r"ncacn_ip_tcp:{}[135]".format(host)
             transport = DCERPCTransportFactory(stringBinding)
             transport.set_connect_timeout(5)
             dce = transport.get_dce_rpc()
             dce.connect()
             try:
-                dce.bind(MSRPC_UUID_PORTMAP, transfer_syntax=('71710533-BEBA-4937-8319-B5DBEF9CCC36', '1.0'))
+                dce.bind(MSRPC_UUID_PORTMAP, transfer_syntax=("71710533-BEBA-4937-8319-B5DBEF9CCC36", "1.0"))
             except DCERPCException as e:
-                if str(e).find('syntaxes_not_supported') >= 0:
+                if str(e).find("syntaxes_not_supported") >= 0:
                     dce.disconnect()
                     return 32
             else:
@@ -39,7 +47,7 @@ class SMBRecon:
                 return 64
 
         except Exception as e:
-            print('Error retrieving os arch of {}: {}'.format(host, str(e)))
+            print("Error retrieving os arch of {}: {}".format(host, str(e)))
 
         return 0
 
@@ -54,7 +62,7 @@ class SMBRecon:
             dialect = None
 
         if port == 139:
-            smb = SMBConnection('*SMBSERVER', host, sess_port=port, timeout=10)
+            smb = SMBConnection("*SMBSERVER", host, sess_port=port, timeout=10)
         else:
             # timeout=60 by default
             smb = SMBConnection(host, host, sess_port=port, preferredDialect=dialect)
@@ -77,7 +85,7 @@ class SMBRecon:
 
     def show(self, host):
         try:
-            self.smb.login('', '')
+            self.smb.login("", "")
         except SessionError as e:
             if "STATUS_ACCESS_DENIED" in e.message:
                 pass
@@ -89,10 +97,13 @@ class SMBRecon:
         print("Build: %s" % self.smb.getServerOSBuild())
         print("Arch: %s" % self.get_os_arch(host))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     desc = "Show SMB informations"
     example = "python show_smb_version.py 127.0.0.1"
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example)
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example
+    )
 
     # Mandatory
     mandatory = parser.add_argument_group("Mandatory")
@@ -100,7 +111,9 @@ if __name__ == '__main__':
 
     # General settings
     generalSettings = parser.add_argument_group("General Settings")
-    generalSettings.add_argument("--dialect", help="Select SMB dialec", default="1", choices=["1","2","2.1","3"], type=str)
+    generalSettings.add_argument(
+        "--dialect", help="Select SMB dialec", default="1", choices=["1", "2", "2.1", "3"], type=str
+    )
 
     args = parser.parse_args()
     if len(argv) < 2:
@@ -109,5 +122,4 @@ if __name__ == '__main__':
         exit(-1)
 
     target = args.target
-    SMBRecon(target.split(':')[0], target.split(':')[1], str(args.dialect))
-
+    SMBRecon(target.split(":")[0], target.split(":")[1], str(args.dialect))

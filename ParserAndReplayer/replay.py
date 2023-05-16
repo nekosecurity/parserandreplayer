@@ -11,7 +11,7 @@ from multiprocessing import Process, Queue, Manager, Lock, Pool
 from abc import ABCMeta, abstractmethod
 import ssl as ssl_library
 import socket
-import queue # imported for using queue.Empty exception
+import queue  # imported for using queue.Empty exception
 import shlex
 
 
@@ -19,7 +19,7 @@ class PluginBase(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, ips, output_path, max_process=10):
-        self.output_path = output_dir+output_path
+        self.output_path = output_dir + output_path
         if not exists(self.output_path):
             mkdir(self.output_path)
             rootlogger.info("%s directory created" % (self.output_path))
@@ -43,8 +43,8 @@ class PluginBase(object):
         raise NotImplementedError
 
     def write_file(self, name, mode="wb", tool="", extraname="", data=""):
-        r""" write_file("test", "wb", "hping", "ssl")
-            Write the result of the commands in a file
+        r"""write_file("test", "wb", "hping", "ssl")
+        Write the result of the commands in a file
 
         """
         rootlogger.info("Writing result in file")
@@ -52,7 +52,7 @@ class PluginBase(object):
         with open(name, mode) as f:
             f.write(data)
             f.write(b"\n")
-        #rootlogger.info("%s finished on %s " % (tool, ip))
+        # rootlogger.info("%s finished on %s " % (tool, ip))
 
 
 class RunExternalTool(PluginBase):
@@ -61,7 +61,7 @@ class RunExternalTool(PluginBase):
 
     def _run_cmd(self, ips, tool, ssl=None, options="", extraname=""):
         r"""
-            Launches an external program
+        Launches an external program
         """
 
         while True:
@@ -76,7 +76,7 @@ class RunExternalTool(PluginBase):
                 else:
                     cmd = tool + " " + options + " " + ip
                     cmd = shlex.split(cmd)
-                    #process = Popen([tool, options, ip], stdout=PIPE, stderr=PIPE)
+                    # process = Popen([tool, options, ip], stdout=PIPE, stderr=PIPE)
                     process = Popen(cmd, stdout=PIPE, stderr=PIPE)
 
                 res = process.communicate()
@@ -84,24 +84,21 @@ class RunExternalTool(PluginBase):
                 process.wait()
                 # clean ip for tcp-timestamp
                 ip = ip.replace(" -p ", ":")
-                self.write_file(ip+"_", tool=basename(tool).split(".")[0], extraname=extraname, data=res[0])
+                self.write_file(ip + "_", tool=basename(tool).split(".")[0], extraname=extraname, data=res[0])
             except queue.Empty:
-                print('except')
+                print("except")
                 break
 
-
-
     def _run(self, tool, ssl="", options="", extraname=""):
-        r""" _run(rdp_sec_check, rdp_option, extrapath)
-            Allows to execute external commands, creating one process per program
+        r"""_run(rdp_sec_check, rdp_option, extrapath)
+        Allows to execute external commands, creating one process per program
         """
         print(self.max_process)
         for _ in range(0, self.max_process):
             p = Process(target=self._run_cmd, args=(self.m.queue, tool, ssl, options, extraname))
-            p.daemon=True
+            p.daemon = True
             p.start()
             p.join()
-
 
     def _clear_queue(self):
         while not self.m.queue.empty():
@@ -111,7 +108,6 @@ class RunExternalTool(PluginBase):
 class RunInternalCode(PluginBase):
     def __init__(self, ips, output_path):
         super(RunInternalCode, self).__init__(ips, output_path)
-
 
     def _run_cmd(self, ips, tool=None, ssl=False, options="", extraname=""):
         r"""
@@ -134,20 +130,18 @@ class RunInternalCode(PluginBase):
                             context.check_hostname = False
                             s = context.wrap_socket(s)
                         except ssl_library.SSLError as e:
-                           print("error: %s" % e)
-
+                            print("error: %s" % e)
 
                     if tool == "http" or tool == "https":
-
-                        s.sendall(b"HEAD / HTTP/1.1\r\nHost:"+ip.encode()+b"\r\n\r\n")
-                        #print(ip.decode())
+                        s.sendall(b"HEAD / HTTP/1.1\r\nHost:" + ip.encode() + b"\r\n\r\n")
+                        # print(ip.decode())
                         recv = s.recv(1024)
                         s.close()
                     else:
                         socket.setdefaulttimeout(5)
                         recv = s.recv(1024)
                     if len(recv) > 0:
-                        self.write_file(ip+":"+port+"_", tool=tool, extraname=extraname, data=recv)
+                        self.write_file(ip + ":" + port + "_", tool=tool, extraname=extraname, data=recv)
                     rootlogger.info("%s finished on %s " % (tool, ip))
                 except EOFError as e:
                     rootlogger.warning("error: %s" % e)
@@ -155,11 +149,11 @@ class RunInternalCode(PluginBase):
                 break
 
     def _run(self, tool, ssl, options, extraname=""):
-        r""" _run("ftp", ssl=False, extrapath)
-            Allows to execute python code, creating one process per execution
+        r"""_run("ftp", ssl=False, extrapath)
+        Allows to execute python code, creating one process per execution
         """
         for _ in range(self.max_process):
             p = Process(target=self._run_cmd, args=(self.m.queue, tool, ssl, options, extraname))
-            p.daemon=True
+            p.daemon = True
             p.start()
             p.join()

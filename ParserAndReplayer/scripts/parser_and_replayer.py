@@ -12,6 +12,7 @@ import subprocess
 import json
 from pprint import pprint
 
+
 class NessusAnalyze:
     def __init__(self, filename, options):
         self.n = nessus.Nessus(filename, options.verbose, options.output_format)
@@ -55,7 +56,6 @@ class NessusAnalyze:
             self.print_targets()
         if options.interesting_vulns:
             self.interesting_vulns()
-
 
     def pluginNames(self, pluginNames):
         results = self.n.find_by_pluginNames(self.fullinfo, *pluginNames)
@@ -135,7 +135,7 @@ class NessusAnalyze:
 
     def print_targets(self):
         self.n.print_targets(self.fullinfo)
-    
+
     def interesting_vulns(self):
         self.n.find_interesting_vulns(self.fullinfo)
 
@@ -143,45 +143,79 @@ class NessusAnalyze:
 if __name__ == "__main__":
     desc = "Parse nessus"
     example = "python parser_and_replayer.py --verbose analyze file.nessus --cve"
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example)
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter, description=desc, epilog=example
+    )
 
     # Options
-    options = parser.add_argument_group('Options')
-    options.add_argument('--verbose', help="Show ips with results", type=int, default=True)
-    options.add_argument('--fullinfo', help="Show all vulnerability details", action="store_true", default=False)
-    options.add_argument('--logger', help="Change the level of logger", type=int, default=1)
-    options.add_argument('--output_format', help="Change output format", type=str, choices=["csv", "table"], default="table")
+    options = parser.add_argument_group("Options")
+    options.add_argument("--verbose", help="Show ips with results", type=int, default=True)
+    options.add_argument("--fullinfo", help="Show all vulnerability details", action="store_true", default=False)
+    options.add_argument("--logger", help="Change the level of logger", type=int, default=1)
+    options.add_argument(
+        "--output_format", help="Change output format", type=str, choices=["csv", "table"], default="table"
+    )
 
     # Analyzer
     # TODO: Issue with subparser()
     types = parser.add_subparsers(dest="subparser")
-    type_analyzer= types.add_parser("analyze", help="Performs an analysis of the nessus file")
-    type_analyzer.add_argument('--interesting_vulns', help="Search for vulnerabilities of interest", action="store_true")
-    type_analyzer.add_argument('--pluginName', help="Search IP addresses impacted by the Nessus plugins names", nargs="+")
-    type_analyzer.add_argument('--pluginID', help="Search IP addresses impacted by the Nessus plugins ID", nargs="+")
-    type_analyzer.add_argument('--severity', help="Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.", nargs="+")
-    type_analyzer.add_argument('--port', help="Search for ports impacted by vulnerabilities.", nargs="+")
-    type_analyzer.add_argument('--ip', help="Search for ips impacted by vulnerabilities.", nargs="+")
-    type_analyzer.add_argument('--cvss', help="Search for vulnerabilities with a CVSS score equal or higher.", type=float)
-    type_analyzer.add_argument('--cve', help="Search for ips impacted by vulnerabilities.", action="store_true")
-    type_analyzer.add_argument('--all-vuln-name', help="Search all vulnerabilities contained in the.nessus file", action="store_true")
-    type_analyzer.add_argument('--statistics', help="Print statistics about parsed reports", action="store_true")
-    type_analyzer.add_argument('--print_targets', help="Print targets in parsed reports", action="store_true")
+    type_analyzer = types.add_parser("analyze", help="Performs an analysis of the nessus file")
+    type_analyzer.add_argument(
+        "--interesting_vulns", help="Search for vulnerabilities of interest", action="store_true"
+    )
+    type_analyzer.add_argument(
+        "--pluginName", help="Search IP addresses impacted by the Nessus plugins names", nargs="+"
+    )
+    type_analyzer.add_argument("--pluginID", help="Search IP addresses impacted by the Nessus plugins ID", nargs="+")
+    type_analyzer.add_argument(
+        "--severity",
+        help="Search for ip addresses impacted by vulnerabilities of severity defined by Nessus.",
+        nargs="+",
+    )
+    type_analyzer.add_argument("--port", help="Search for ports impacted by vulnerabilities.", nargs="+")
+    type_analyzer.add_argument("--ip", help="Search for ips impacted by vulnerabilities.", nargs="+")
+    type_analyzer.add_argument(
+        "--cvss", help="Search for vulnerabilities with a CVSS score equal or higher.", type=float
+    )
+    type_analyzer.add_argument("--cve", help="Search for ips impacted by vulnerabilities.", action="store_true")
+    type_analyzer.add_argument(
+        "--all-vuln-name", help="Search all vulnerabilities contained in the.nessus file", action="store_true"
+    )
+    type_analyzer.add_argument("--statistics", help="Print statistics about parsed reports", action="store_true")
+    type_analyzer.add_argument("--print_targets", help="Print targets in parsed reports", action="store_true")
 
-    type_analyzer.add_argument('--metasploit_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit", action="store_true")
-    type_analyzer.add_argument('--d2_elliot_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by D2 Elliot", action="store_true")
-    type_analyzer.add_argument('--canvas_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.", action="store_true")
-    type_analyzer.add_argument('--nessus_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Nessus.", action="store_true")
-    type_analyzer.add_argument('--core_exploit', help="Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.", action="store_true")
-    type_analyzer.add_argument("filename", help='.nessus file', nargs='?')
+    type_analyzer.add_argument(
+        "--metasploit_exploit",
+        help="Search for ip addresses impacted by vulnerabilities that can be exploited by Metasploit",
+        action="store_true",
+    )
+    type_analyzer.add_argument(
+        "--d2_elliot_exploit",
+        help="Search for ip addresses impacted by vulnerabilities that can be exploited by D2 Elliot",
+        action="store_true",
+    )
+    type_analyzer.add_argument(
+        "--canvas_exploit",
+        help="Search for ip addresses impacted by vulnerabilities that can be exploited by Canvas.",
+        action="store_true",
+    )
+    type_analyzer.add_argument(
+        "--nessus_exploit",
+        help="Search for ip addresses impacted by vulnerabilities that can be exploited by Nessus.",
+        action="store_true",
+    )
+    type_analyzer.add_argument(
+        "--core_exploit",
+        help="Search for ip addresses impacted by vulnerabilities that can be exploited by Core Impact.",
+        action="store_true",
+    )
+    type_analyzer.add_argument("filename", help=".nessus file", nargs="?")
 
     # Mandatory
-    #mandatory = parser.add_argument_group("Mandatory")
-    #mandatory.add_argument("filename", help='.nessus file', nargs='?')
+    # mandatory = parser.add_argument_group("Mandatory")
+    # mandatory.add_argument("filename", help='.nessus file', nargs='?')
 
-
-
-    #TODO
+    # TODO
     type_replay = types.add_parser("replay", help="Replays the nessus traces")
     args = parser.parse_args()
 
